@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
           git 'https://github.com/Nesalik1/task-6.2c'
             steps {
-                // Build the code using Maven
+                // Build the code using Mvn
                 sh 'mvn clean package'
             }
         }
