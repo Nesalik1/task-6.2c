@@ -46,9 +46,7 @@ pipeline {
     }
 
     post {
-        always {
-          
-        }
+       
         success {
             // Send success notification email
             emailext(
