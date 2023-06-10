@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    triggers {
-        pollSCM('*/5 * * * *') // Run every 5 minutes 
-    }
-
     stages {
         stage('Build') {
             steps {
@@ -41,11 +37,7 @@ pipeline {
             }
         }
 
-        stage('Deploy to Production') {
-            steps {
-                 echo "Deploying..."
-            }
-        }
+        
     }
 
     post {
