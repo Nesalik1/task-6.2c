@@ -53,18 +53,18 @@ pipeline {
         success {
             // Send success notification email
             mail (
-                to: 'nesalikarunarathne@gmail.com'
+                to: 'nesalikarunarathne@gmail.com',
                 subject: 'Pipeline Successful',
-                body: 'The pipeline completed successfully.',
+                body: 'The pipeline completed successfully.'
                 
             )
         }
         failure {
             // Send failure notification email
             mail (
-                to: 'nesalikarunarathne@gmail.com'
+                to: 'nesalikarunarathne@gmail.com',
                 subject: 'Pipeline Failed',
-                body: 'The pipeline failed. Please check the logs for more information.',
+                body: 'The pipeline failed. Please check the logs for more information.'
                
             )
         }
