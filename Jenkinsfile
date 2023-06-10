@@ -3,7 +3,7 @@ pipeline {
 
     stages {
         stage('Build') {
-          git 'https://github.com/Nesalik1/task-6.2c'
+          git 'https://github.com/Nesalik1/task-6.2c/Jenkinsfile'
             steps {
                 // Build the code using Mvn
                 sh 'mvn clean package'
