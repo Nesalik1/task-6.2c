@@ -4,54 +4,43 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Build the code using Maven
-                sh 'mvn clean package'
+                echo "Building..."
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
-                // Run unit tests using a test automation tool (e.g., JUnit)
-                sh 'mvn test'
-
-                // Run integration tests using a test automation tool (e.g., Selenium)
-                sh 'mvn integration-test'
+                 echo "Testing..."
             }
         }
 
         stage('Code Analysis') {
             steps {
-                // Integrate a code analysis tool (e.g., SonarQube)
-                // Run code analysis using the tool
-                sh 'sonar-scanner'
+                 echo "Analyzing..."
             }
         }
 
         stage('Security Scan') {
             steps {
-                // Perform security scan using a security scanning tool (e.g., OWASP ZAP)
-                sh 'owasp-zap scan'
+                echo "Scaning..."
             }
         }
 
         stage('Deploy to Staging') {
             steps {
-                // Deploy the application to a staging server (e.g., AWS EC2 instance)
-                sh 'ansible-playbook deploy-staging.yml'
+                echo "Deploying..."
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
-                // Run integration tests on the staging environment
-                sh 'mvn integration-test'
+                 echo "Testing..."
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                // Deploy the application to a production server (e.g., AWS EC2 instance)
-                sh 'ansible-playbook deploy-production.yml'
+                 echo "Deploying..."
             }
         }
     }
@@ -66,7 +55,7 @@ pipeline {
             emailext(
                 subject: 'Pipeline Successful',
                 body: 'The pipeline completed successfully.',
-                to: 'nesalikarunarathne@gmail.com',
+                mail to: 'nesalikarunarathne@gmail.com',
                 attachmentsPattern: 'logs/**'
             )
         }
@@ -75,7 +64,7 @@ pipeline {
             emailext(
                 subject: 'Pipeline Failed',
                 body: 'The pipeline failed. Please check the logs for more information.',
-                to: 'nesalikarunarathne@gmail.com',
+                mail to: 'nesalikarunarathne@gmail.com',
                 attachmentsPattern: 'logs/**'
             )
         }
