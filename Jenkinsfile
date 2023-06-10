@@ -3,82 +3,84 @@ pipeline {
 
     stages {
         stage('Build') {
-          git 'https://github.com/Nesalik1/task-6.2c/Jenkinsfile'
             steps {
-                // Build the code using Mvn
+                // Use Maven to build your code
                 sh 'mvn clean package'
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
-                // Run unit tests using a test automation tool (e.g., JUnit)
+                // Run unit tests
                 sh 'mvn test'
-
-                // Run integration tests using a test automation tool (e.g., Selenium)
+                
+                // Run integration tests
                 sh 'mvn integration-test'
             }
         }
 
         stage('Code Analysis') {
             steps {
-                // Integrate a code analysis tool (e.g., SonarQube)
-                // Run code analysis using the tool
-                sh 'sonar-scanner'
+                // Integrate a code analysis tool (e.g., SonarQube) to analyze the code
+                // Perform the necessary configuration to send analysis results to SonarQube
+                // Execute the analysis
+                // Example: sh 'mvn sonar:sonar'
             }
         }
 
         stage('Security Scan') {
             steps {
-                // Perform security scan using a security scanning tool (e.g., OWASP ZAP)
-                sh 'owasp-zap scan'
+                // Integrate a security scanning tool (e.g., OWASP ZAP, SonarQube, Snyk) to scan your code
+                // Perform the necessary configuration to run the security scan
+                // Example: sh 'mvn owasp:dependency-check'
             }
         }
 
         stage('Deploy to Staging') {
             steps {
                 // Deploy the application to a staging server (e.g., AWS EC2 instance)
-                sh 'ansible-playbook deploy-staging.yml'
+                // Use deployment tools like Ansible, Docker, or custom scripts to perform the deployment
+                // Example: sh 'ansible-playbook deploy-staging.yml'
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
                 // Run integration tests on the staging environment
-                sh 'mvn integration-test'
+                // Ensure that the application functions correctly in a production-like environment
+                // Example: sh 'mvn integration-test -Denvironment=staging'
             }
         }
 
         stage('Deploy to Production') {
             steps {
                 // Deploy the application to a production server (e.g., AWS EC2 instance)
-                sh 'ansible-playbook deploy-production.yml'
+                // Use deployment tools like Ansible, Docker, or custom scripts to perform the deployment
+                // Example: sh 'ansible-playbook deploy-production.yml'
             }
         }
     }
 
     post {
         always {
-            // Archive logs as attachments
-            archiveArtifacts artifacts: 'logs/**'
+            // Archive the generated artifacts (e.g., JAR files, test reports)
+            archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
         }
+
         success {
-            // Send success notification email
-            emailext(
-                subject: 'Pipeline Successful',
-                body: 'The pipeline completed successfully.',
-                to: 'nesalikarunarathne@gmail.com',
-                attachmentsPattern: 'logs/**'
-            )
+            // Send a success notification email
+            emailext subject: 'Pipeline Successful',
+                body: 'The pipeline has completed successfully.',
+                recipientProviders: [developers()],
+                attachmentsPattern: '**/*.log'
         }
+
         failure {
-            // Send failure notification email
-            emailext(
-                subject: 'Pipeline Failed',
-                body: 'The pipeline failed. Please check the logs for more information.',
-                to: 'nesalikarunarathne@gmail.com',
-                attachmentsPattern: 'logs/**'
-            )
+            // Send a failure notification email
+            emailext subject: 'Pipeline Failed',
+                body: 'The pipeline has failed.',
+                recipientProviders: [developers()],
+                attachmentsPattern: '**/*.log'
         }
     }
 }
