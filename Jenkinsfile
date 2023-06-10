@@ -47,8 +47,7 @@ pipeline {
 
     post {
         always {
-            // Archive logs as attachments
-            archiveArtifacts artifacts: 'logs/**'
+          
         }
         success {
             // Send success notification email
