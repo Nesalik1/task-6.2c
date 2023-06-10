@@ -49,20 +49,18 @@ pipeline {
         
     }
 
-    post {
-       
+   post {
         success {
             // Send success notification email
-            emailext(
+            emailext (
                 subject: 'Pipeline Successful',
                 body: 'The pipeline completed successfully.',
                 to: 'nesalikarunarathne@gmail.com'
-                
             )
         }
         failure {
             // Send failure notification email
-            emailext(
+            emailext (
                 subject: 'Pipeline Failed',
                 body: 'The pipeline failed. Please check the logs for more information.',
                 to: 'nesalikarunarathne@gmail.com'
